@@ -1,0 +1,113 @@
+{% extends "main-web/base.html" %}
+{% block title %} Roommate App | Add Post {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main id="main">
+        <!-- ======= Contact Single ======= -->
+        <section class="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 section-t8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="col-md-8 mb-3">
+                                        <div class="form-group mt-3">
+                                            <label class="pb-2" for="looking_for">Looking for</label>
+                                            <select onchange="lookingFor(this);" name="looking_for" required
+                                                    class="form-select form-control-lg form-control-a">
+                                                <option value="PLACE">PLACE</option>
+                                                <option value="ROOMMATES">ROOMMATES</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3">
+                                        <div class="form-group mt-3">
+                                            <label class="pb-2" for="move_in">Move-In</label>
+                                            <select name="move_in" required
+                                                    class="form-select form-control-lg form-control-a">
+                                                <option value="SUMMER">SUMMER</option>
+                                                <option value="FALL">FALL</option>
+                                                <option value="SPRING">SPRING</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3">
+                                        <div class="form-group mt-3">
+                                            <label class="pb-2" for="housing_type">Housing Type</label>
+                                            <select name="housing_type" required
+                                                    class="form-select form-control-lg form-control-a">
+                                                <option value="ON-CAMPUS">ON-CAMPUS</option>
+                                                <option value="OFF-CAMPUS">OFF-CAMPUS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3">
+                                        <div class="form-group mt-3">
+                                            <label class="pb-2" for="date">Date</label>
+                                            <input type="date" name="date"
+                                                   class="form-control form-control-lg form-control-a" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3" style="display: none" id="noOfBedrooms">
+                                        <div class="form-group mt-3">
+                                            <label class="pb-2" for="noOfBedrooms">Bedrooms</label>
+                                            <input type="number" name="no_bedrooms" placeholder="No of bedrooms"
+                                                   class="form-control form-control-lg form-control-a">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3" style="display: none" id="noOfBathrooms">
+                                        <div class="form-group mt-3">
+                                            <label class="pb-2" for="looking_for">Bathrooms</label>
+                                            <input type="number" name="no_bathrooms" placeholder="No of bathrooms"
+                                                   class="form-control form-control-lg form-control-a">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3" style="display: none" id="pics">
+                                        <div class="form-group mt-3">
+                                            <input type="file" name="pics" multiple
+                                                   class="form-control form-control-lg form-control-a">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 my-3">
+                                        <div class="mb-3">
+                                            {% if error %}
+                                                <div class="error-message">{{ error }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 text-lg-left">
+                                        <button type="submit" class="btn btn-a">Submit</button>
+                                    </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section><!-- End Contact Single-->
+
+    </main><!-- End #main -->
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script>
+        function lookingFor(item) {
+            if (item.value === 'ROOMMATES') {
+                document.getElementById('noOfBedrooms').style.display = 'block'
+                document.getElementById('noOfBathrooms').style.display = 'block'
+                document.getElementById('pics').style.display = 'block'
+            } else {
+                document.getElementById('noOfBedrooms').style.display = 'none'
+                document.getElementById('noOfBathrooms').style.display = 'none'
+                document.getElementById('pics').style.display = 'none'
+            }
+        }
+    </script>
+
+{% endblock javascripts %}

@@ -1,0 +1,47 @@
+{% extends "main-web/base.html" %}
+{% block title %} Roommate App | My Contacts {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main id="main">
+        <!-- ======= Contact Single ======= -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 section-t8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Contacted For</th>
+                                        <th scope="col">Message</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for contact in contacts %}
+                                        <tr>
+                                            <th scope="row"><a
+                                                    href="/post/{{ contact.contacted_for.user_reg.id }}">{{ contact.contacted_for.looking_for }}</a>
+                                            </th>
+                                            <td>{{ contact.message }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Contact Single-->
+
+    </main><!-- End #main -->
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}

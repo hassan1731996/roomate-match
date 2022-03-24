@@ -1,0 +1,145 @@
+{% extends "main-web/base.html" %}
+{% block title %} RoomamteApp | Get Post {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main id="main">
+
+        <!-- ======= Intro Single ======= -->
+        <section class="intro-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if data.user_reg.user.username != request.user.username %}
+                            {% if request.user.is_authenticated %}
+                                <button type="button" class="btn btn-b" data-bs-toggle="modal"
+                                        data-bs-target="#contactModal">Contact
+                                </button>
+                            {% else %}
+                                <a class="btn btn-b" href="/register/">Contact</a>
+                            {% endif %}
+                        {% endif %}
+                        {% if data.user_reg.user.username == request.user.username %}
+                            <a href="/post/{{ data.id }}?edit=True/" class="btn btn-a">Edit</a>
+                            <a href="/edit/post/{{ data.id }}/" class="btn btn-b">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Intro Single-->
+
+        <!-- ======= Property Single ======= -->
+        <section class="property-single nav-arrow-b">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row section-t3">
+                            <div class="col-sm-12">
+                                <div class="title-box-d">
+                                    <h3 class="title-d">Contact Details</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-4">
+                                <div class="property-agent">
+                                    <h4 class="title-agent">{{ data.user_reg.user.username }}</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Email:</strong>
+                                            <span class="color-text-a">{{ data.user_reg.user.email }}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Move-In:</strong>
+                                            <span class="color-text-a">{{ data.move_in }} {{ data.date }}</span>
+                                        </li>
+                                        {% if data.looking_for == 'ROOMMATES' %}
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Bedrooms:</strong>
+                                                <span class="color-text-a">{{ data.no_of_bedrooms }}</span>
+                                            </li>
+                                            <li class="d-flex justify-content-between">
+                                                <strong>Bathrooms:</strong>
+                                                <span class="color-text-a">{{ data.no_of_bathrooms }}</span>
+                                            </li>
+                                        {% endif %}
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Housing Type:</strong>
+                                            <span class="color-text-a">{{ data.housing_type }}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>University:</strong>
+                                            <span class="color-text-a">{{ data.user_reg.university }}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Status:</strong>
+                                            <span class="color-text-a">{{ data.role }}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Looking For:</strong>
+                                            <span class="color-text-a">{{ data.looking_for }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% if data.looking_for == 'ROOMMATES' %}
+                            <div class="row">
+                                <div class="col-md-12 col-lg-offset-8">
+                                    <!-- ======= Intro Section ======= -->
+                                    <div class="intro intro-carousel swiper position-relative">
+                                        <div class="swiper-wrapper">
+                                            {% for img in posts_images %}
+                                                <div class="swiper-slide carousel-item-a intro-item bg-image"
+                                                     style="background-image: url({{ img.main_image.url }})">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="swiper-pagination"></div>
+                                    </div><!-- End Intro Section -->
+                                </div>
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Property Single-->
+        <!-- Modal -->
+        <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="/my-contacts/">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group mt-3">
+                                        <input name="post_id" type="hidden" value="{{ data.id }}">
+                                        <label class="pb-2" for="looking_for">Message:</label>
+                                        <textarea name="message" class="form-control form-control-lg form-control-a"
+                                                  rows="6" cols="12"
+                                                  required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-a" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-b">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main><!-- End #main -->
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

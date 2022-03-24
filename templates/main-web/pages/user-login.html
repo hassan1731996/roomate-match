@@ -1,0 +1,49 @@
+{% extends "main-web/base.html" %}
+{% block title %} Login | Roommate Matching App {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main id="main">
+        <!-- ======= Contact Single ======= -->
+        <section class="vh-100">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                            <div class="card-body p-5">
+                                <h3 class="mb-5">Sign in</h3>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="username" class="form-control" id="floatingInput"
+                                               placeholder="Username" required>
+                                        <label for="floatingInput">Username</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <input type="password" name="password" class="form-control"
+                                               id="floatingPassword"
+                                               placeholder="Password" required>
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    {% if error %}
+                                        <br>
+                                        <p class="text-danger">{{ error }}</p>
+                                    {% endif %}
+                                    <br>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-a" type="submit">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Contact Single-->
+
+    </main><!-- End #main -->
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
